@@ -8,7 +8,7 @@
 #define TESTS 13
 
 // Funktion, gör första bokstaven stor och resten små
-void formatNameCase(char *name) {
+void formatNameCase(char name[]) {
     name[0] = toupper(name[0]);
     for (int i = 1; name[i] != '\0'; i++) {
         name[i] = tolower(name[i]);
@@ -17,17 +17,17 @@ void formatNameCase(char *name) {
 
 // Huvudprogrammet
 int main() {
-    // Namn på studenterna (max 20 tecken per namn)
-    char names[STUDENTS][20];
+    // Namn på studenterna (max 10 tecken + avslutande '\0')
+    char names[STUDENTS][11];
 
-    // Tabell med poäng: 5 studenter × 13 prov
+    // Poäng: varje student har 13 provresultat
     int scores[STUDENTS][TESTS];
 
     // Medelvärden för varje student
     double averages[STUDENTS];
 
     // Input
-    // Vi läser in namn + 13 testresultat för varje student
+    // läser in namn + 13 testresultat för varje student
     for (int i = 0; i < STUDENTS; i++) {
         scanf("%s", names[i]);
         for (int j = 0; j < TESTS; j++) {
@@ -45,10 +45,10 @@ int main() {
     }
 
     // Hitta student med högst medelvärde
-    int bestIndex = 0;
+    int highestScoringStudentIndex = 0;
     for (int i = 1; i < STUDENTS; i++) {
-        if (averages[i] > averages[bestIndex]) {
-            bestIndex = i;
+        if (averages[i] > averages[highestScoringStudentIndex]) {
+            highestScoringStudentIndex = i;
         }
     }
 
@@ -61,12 +61,12 @@ int main() {
 
     // Output
     // Korrigera namn och skriv ut den bästa studenten 
-    formatNameCase(names[bestIndex]);
-    printf("%s\n", names[bestIndex]);
+    formatNameCase(names[highestScoringStudentIndex]);
+    printf("%s\n", names[highestScoringStudentIndex]);
 
     // Skriv ut alla som ligger under gruppens medelvärde
     // och korrigerar namn
-    for (int i = 0; i < STUDENTS; i++) {
+     for (int i = 0; i < STUDENTS; i++) {
         if (averages[i] < groupAvg) {
             formatNameCase(names[i]);
             printf("%s\n", names[i]);
